@@ -15,12 +15,24 @@ export const registerUserValidator = Joi.object({
         .required(),
 
     password: Joi.string()
-        .pattern(new ReqExp('^[a-zA-Z0-0]{3,30}$')),
+        .required(),
+    // .pattern(new ReqExp('^[a-zA-Z0-0]{3,30}$')),
 
-    repeat_password: Joi.ref('password'),
+    repeat_password: Joi.any()
+        .valid(Joi.ref('password'))
+        .required()
+        .messages({ 'any.only': 'Passwords do not match' }),
+
+    phone: Joi.string()
+        .required(),
+
+    personalID: Joi.string()
+    .alphanum()
+    .required()
+    
 })
 
-    .with('password', 'repeat_password');
+// .with('password', 'repeat_password');
 
 
 export const loginUserValidator = Joi.object({

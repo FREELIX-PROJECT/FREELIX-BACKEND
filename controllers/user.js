@@ -15,7 +15,7 @@ export const registerUser = async (req, res, next) => {
             return res.status(422).json(error);
         }
         // check by email if user already exit 
-        const user = UserModel.findOne({email: value.email});
+        const user = await UserModel.findOne({email: value.email});
 
         if (user) {
             return res.status(409).json('User already exist!');
@@ -34,6 +34,7 @@ export const registerUser = async (req, res, next) => {
             text: `Welcome! ${value.userName}, your account has been registered successfully.`
         });
         // Respond to request
+        res.json('User Registered!')
         
     } catch (error) {
         next(error);
