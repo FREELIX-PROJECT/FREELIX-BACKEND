@@ -77,7 +77,17 @@ export const userLogin = async (req, res, next) => {
         next(error);
     }
 }
+
 // Get User Profile
+export const getUserProfile = async (req, res, next) => {
+    try {
+        const user = await UserModel.findById(req.auth.id).select({password: false});
+
+        res.json(user);
+    } catch (error) {
+        next(error);
+    }
+}
 // Update User Profile
 // Logout Users
 // Delete Users
