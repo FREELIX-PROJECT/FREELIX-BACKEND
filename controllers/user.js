@@ -1,7 +1,7 @@
 import { UserModel } from "../models/user.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { loginUserValidator, registerUserValidator } from "../validators/user.js";
+import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
 import { mailTransporter } from "../utils/mail.js";
 
 
@@ -81,13 +81,35 @@ export const userLogin = async (req, res, next) => {
 // Get User Profile
 export const getUserProfile = async (req, res, next) => {
     try {
-        const user = await UserModel.findById(req.auth.id).select({password: false});
+        const user = await UserModel.findById(req.auth.id).select({ password: false });
 
         res.json(user);
     } catch (error) {
         next(error);
     }
 }
+
+// Get user projects
+
 // Update User Profile
+export const updateUserProfile = async (req, res, next) => {
+    try {
+        // validate user input
+        const { error, value } = updateUserValidator.validate({
+            ...req.body,
+            avatar: req.file?.filename
+        });
+        if (error) {
+            return res.status(422).json(error);
+        }
+
+        // Update user
+        await UserModel.findByIdAndUpdate(req.auth.id, value);
+        // Respond to request
+        res.json('User profile updated')
+    } catch (error) {
+        next(error);
+    }
+}
 // Logout Users
 // Delete Users
