@@ -28,7 +28,10 @@ export const registerUserValidator = Joi.object({
 
     personalID: Joi.string()
     .alphanum()
-    .required()
+    .required(),
+
+    role: Joi.string()
+    .valid('user', 'freelancer', 'manager', 'admin')
     
 })
 
