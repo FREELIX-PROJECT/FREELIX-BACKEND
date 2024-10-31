@@ -46,7 +46,13 @@ export const checkBlacklist = async (req, res, next) => {
         if (blacklistedToken) {
             return res.status(401).json({ message: 'Token is invalid or expired.' });
         }
+        next();
     } catch (error) {
         next(error)
     }
 }
+
+export const removeExpiredTokens = async () => {
+    await BlacklistModel.deleteMany({ expiresAt: { $lt: new Date() } });
+}
+

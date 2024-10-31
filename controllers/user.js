@@ -117,18 +117,27 @@ export const userLogout = async (req, res, next) => {
         const token = req.headers.authorization.split(" ")[1];
 
         if (!token) {
-            return res.status(401).json({message: 'No token provided.'})
+            return res.status(401).json({ message: 'No token provided.' })
         }
         // Decode the token to get the expiration date
         const decoded = jwt.decode(token);
         const expiresAt = new Date(decoded.exp * 1000); //Convert to milliseconds
 
         // Store the token in the blacklist
-        await BlacklistModel.create({token, expiresAt});
+        await BlacklistModel.create({ token, expiresAt });
 
-        res.json({message: 'Successfully logged out!'})
+
+        res.json({ message: 'Successfully logged out!' })
     } catch (error) {
         next(error);
     }
 }
+
+// Remove expired Tokens from the database at intervals
+// const removeExpiredTokens = async () => {
+//     await BlacklistModel.deleteMany({ expiresAt: { $lt: new Date() } });
+
+//     // Run this at regualar intervals 
+//     setInterval(removeExpiredTokens, 0.15 * 60 * 60 * 1000);
+// }
 // Delete Users
