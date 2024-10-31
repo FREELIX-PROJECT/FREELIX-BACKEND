@@ -4,11 +4,11 @@ export const registerUserValidator = Joi.object({
     fullName: Joi.string()
         .required(),
 
-    userName: Joi.string()
-        .alphanum()
-        .min(3)
-        .max(30)
-        .required(),
+    // userName: Joi.string()
+    //     .alphanum()
+    //     .min(3)
+    //     .max(30)
+    //     .required(),
 
     email: Joi.string()
         .email()
@@ -23,12 +23,12 @@ export const registerUserValidator = Joi.object({
         .required()
         .messages({ 'any.only': 'Passwords do not match' }),
 
-    phone: Joi.string()
-        .required(),
+    // phone: Joi.string()
+    //     .required(),
 
-    personalID: Joi.string()
-    .alphanum()
-    .required(),
+    // personalID: Joi.string()
+    // .alphanum()
+    // .required(),
 
     role: Joi.string()
     .valid('user', 'freelancer', 'manager', 'admin')
@@ -48,6 +48,6 @@ export const loginUserValidator = Joi.object({
 });
 
 export const updateUserValidator = Joi.object({
-    userName: Joi.string(),
+    fullName: Joi.string(),
     avatar: Joi.string(),
 });

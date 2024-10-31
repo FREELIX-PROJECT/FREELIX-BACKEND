@@ -12,11 +12,11 @@ const userSchema = new Schema({
         required: true
     },
 
-    userName: {
-        type: String,
-        required: true,
-        unique: true
-    },
+    // userName: {
+    //     type: String,
+    //     required: true,
+    //     unique: true
+    // },
 
     email: {
         type: String,
@@ -28,17 +28,17 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    
-    phone: {
-        type: String,
-        required: true
-    },
 
-    personalID: {
-        type: String,
-        required: true,
-        unique: true
-    },
+    // phone: {
+    //     type: String,
+    //     required: true
+    // },
+
+    // personalID: {
+    //     type: String,
+    //     required: true,
+    //     unique: true
+    // },
 
     role: {
         type: String,
@@ -54,6 +54,20 @@ const userSchema = new Schema({
     timestamps: true,
 });
 
+const blacklistSchema = new Schema({
+    token: {
+        type: String,
+        required: true
+    },
+
+    expiresAt: {
+        type: Date,
+        required: true
+    }
+});
+
 userSchema.plugin(toJSON);
 
 export const UserModel = model('User', userSchema);
+
+export const BlacklistModel = model('Blacklist', blacklistSchema);
