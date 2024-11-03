@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/user.js";
-import { removeExpiredTokens } from "./middlewares/auth.js";
+// import { removeExpiredTokens } from "./middlewares/auth.js";
 
 await mongoose.connect(process.env.MONGO_URI);
 
@@ -12,9 +12,9 @@ app.use(express.json());
 app.use(cors());
 
 app.use(userRouter);
-app.use(removeExpiredTokens);
-// Run this at regualar intervals 
-setInterval(removeExpiredTokens, 10 * 60 * 1000);
+// app.use(removeExpiredTokens);
+// // Run this at regualar intervals 
+// setInterval(removeExpiredTokens, 10 * 60 * 1000);
 
 
 
