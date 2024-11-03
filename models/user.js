@@ -28,6 +28,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+
     // phone: {
     //     type: String,
     //     required: true
@@ -59,14 +60,22 @@ const blacklistSchema = new Schema({
         required: true
     },
 
+    createdAt: {
+        type: Date, 
+        default: Date.now
+    },
+
     expiresAt: {
         type: Date,
         required: true
     }
 });
+// Create a (Time To Live (TTL)) index that expires documents after 5 mins
+blacklistSchema.index({createdAt: 1}, {expireAfterSeconds:300}); //300 seconds = 5 mins
 
 userSchema.plugin(toJSON);
 
 export const UserModel = model('User', userSchema);
 
 export const BlacklistModel = model('Blacklist', blacklistSchema);
+model.exports = BlacklistModel;
