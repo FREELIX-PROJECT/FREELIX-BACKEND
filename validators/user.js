@@ -11,7 +11,7 @@ export const registerUserValidator = Joi.object({
     password: Joi.string()
         .required(),
 
-    repeat_password: Joi.any()
+    confirmPassword: Joi.any()
         .valid(Joi.ref('password'))
         .required()
         .messages({ 'any.only': 'Passwords do not match' }),
