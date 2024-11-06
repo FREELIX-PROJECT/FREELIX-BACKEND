@@ -27,6 +27,8 @@ const userSchema = new Schema({
     timestamps: true,
 });
 
+
+
 const blacklistSchema = new Schema({
     token: {
         type: String,
@@ -51,4 +53,4 @@ userSchema.plugin(toJSON);
 export const UserModel = model('User', userSchema);
 
 export const BlacklistModel = model('Blacklist', blacklistSchema);
-// model.exports = BlacklistModel;
+model.exports = BlacklistModel;
