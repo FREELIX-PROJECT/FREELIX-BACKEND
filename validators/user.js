@@ -4,8 +4,6 @@ export const registerUserValidator = Joi.object({
     fullName: Joi.string()
         .required(),
 
-    userName: Joi.string(),
-
     email: Joi.string()
         .email()
         .required(),
