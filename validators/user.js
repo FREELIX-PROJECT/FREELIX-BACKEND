@@ -4,6 +4,8 @@ export const registerUserValidator = Joi.object({
     fullName: Joi.string()
         .required(),
 
+    userName: Joi.string(),
+
     email: Joi.string()
         .email()
         .required(),
@@ -15,7 +17,7 @@ export const registerUserValidator = Joi.object({
         .valid(Joi.ref('password'))
         .required()
         .messages({ 'any.only': 'Passwords do not match' }),
-    
+
 })
 
 // .with('password', 'repeat_password');
