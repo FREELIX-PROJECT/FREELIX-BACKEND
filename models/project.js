@@ -20,6 +20,6 @@ const projectSchema = new Schema({
         timestamps: true,
     })
 
-projectModel.plugin(toJSON);
+projectSchema.plugin(toJSON);
 
-export const projectModel = model('Project', projectSchema);
+export const ProjectModel = model('Project', projectSchema);

@@ -14,6 +14,12 @@ export const addTask = async (req, res, next)=>{
             user:req.auth.id
         });
         //send a reminder or notification
+        const addTaskTime = new Date().toLocaleString();
+        await mailTransporter.sendMail({
+            to: req.auth.id,
+            subject: "Task added successfully",
+            text: `You have added: ${value.title} as a task at ${addTaskTime}`
+        })
         //response to request
         res.status(201).json(newTask);
 
@@ -39,19 +45,65 @@ export const countTasks = async (req, res, next)=>{
 
 
 
-export const updateTask = (req, res, next)=>{
+export const updateTask = async (req, res, next)=>{
     try {
         const {error, value} = updateTaskValidator.validate(req.body);
         if (error) {
-            return res.status(404).json("")
+            return res.status(404).json("Validation Error");
         }
+        const updateTask = await TicketModel.findByIdAndUpdate(
+            { _id: req.params.id, user: req.auth.id },
+            { ...req.body },
+            { new: true }
+        );
+        if (!updateTicket) {
+           return  res.status(404).json("Update wasn't successful");
+        }
+        return res.status(200).json("Ticket updated");
     } catch (error) {
         next(error);
     }
 }
 
-export const deleteTask =()=>{}
+export const deleteTask = async (req, res, next) => {
+    try {
+        const deletedTask = await TaskModel.findOneAndDelete(req.body.id);
 
-export const getTasks = ()=>{}
+        // Check if the task was found and deleted
+        if (!deletedTask) {
+            return res.status(404).json("Task not found.");
+        }
 
-export const getTask = ()=>{}
+        // Respond with a success message
+        res.json("Task Successfully deleted ")
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getTasks = async (req, res, next) => {
+    try {
+        const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
+        const taskFilter = { ...JSON.parse(filter), user: req.auth.id };
+        // Fetch Tasks from database
+        const tasks = await TaskModel.find(taskFilter)
+            .sort(JSON.parse(sort))
+            .limit(limit)
+            .skip(skip);
+        // Return response
+        return res.status(200).json(tasks);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getTask = async (req, res, next) => {
+    try {
+        //get ticket by id from database
+        const ticket = await TicketModel.findById(req.params.id);
+        //respond  to request
+        res.json(ticket);
+    } catch (error) {
+        next(error);
+    }
+};
