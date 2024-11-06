@@ -31,7 +31,7 @@ export const registerUser = async (req, res, next) => {
         await mailTransporter.sendMail({
             to: value.email,
             subject: "User Registeration",
-            text: `Welcome! ${value.userName}, your account has been registered successfully.`
+            text: `Welcome! ${value.fullName}, your account has been registered successfully.`
         });
         // Respond to request
         res.json('User Registered!')
