@@ -6,7 +6,7 @@ import {
     deleteTask,
     getTasks,
     getTask
-} from "../controllers/taskController.js";
+} from "../controllers/task.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
 const taskRouter = Router();
