@@ -12,7 +12,7 @@ export const addProject = async (req, res, next) => {
         // write Project to database
         const newProject = await ProjectModel.create({
             ...value,
-            user: req.auth.id,
+            // user: req.auth.id,
         });
         //respond to request
         res.status(201).json(newProject);
@@ -24,12 +24,14 @@ export const addProject = async (req, res, next) => {
 export const getProjects = async (req, res, next) => {
     try {
         const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
-        const taskFilter = { ...JSON.parse(filter), user: req.auth.id };
+        // const taskFilter = { user: req.auth.id };
         // Fetch task from database
-        const task = await ProjectModel.find(taskFilter)
+        const task = await ProjectModel
+            .find(JSON.parse(filter))
             .sort(JSON.parse(sort))
             .limit(limit)
-            .skip(skip);
+            .skip(skip)
+            .populate('freelancer', 'fullName');
         // Return response
         return res.status(200).json(task);
     } catch (error) {
@@ -53,7 +55,7 @@ export const countProject = async (req, res, next) => {
 export const getProject = async (req, res, next) => {
     try {
         //get Project by id from database
-        const Project = await ProjectModel.findById(req.params.id);
+        const Project = await ProjectModel.findById(req.params.id).populate('freelancer', 'fullName');
         //respond  to request
         res.json(Project);
     } catch (error) {
@@ -90,7 +92,7 @@ export const deleteProject = async (req, res, next) => {
             return res.status(404).json("Project not found.");
         }
         // Respond with a success message
-        res.json("Project deleted and notification sent.");
+        res.json("Project deleted!");
     } catch (error) {
         next(error);
     }
