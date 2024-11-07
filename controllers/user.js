@@ -31,7 +31,7 @@ export const registerUser = async (req, res, next) => {
         await mailTransporter.sendMail({
             to: value.email,
             subject: "User Registeration",
-            text: `Welcome! ${value.userName}, your account has been registered successfully.`
+            text: `Welcome! ${value.fullName}, your account has been registered successfully.`
         });
         // Respond to request
         res.json('User Registered!')
@@ -133,11 +133,4 @@ export const userLogout = async (req, res, next) => {
     }
 }
 
-// Remove expired Tokens from the database at intervals
-// const removeExpiredTokens = async () => {
-//     await BlacklistModel.deleteMany({ expiresAt: { $lt: new Date() } });
-
-//     // Run this at regualar intervals 
-//     setInterval(removeExpiredTokens, 0.15 * 60 * 60 * 1000);
-// }
 // Delete Users
