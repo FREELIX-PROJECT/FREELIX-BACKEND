@@ -51,7 +51,7 @@ export const updateTask = async (req, res, next)=>{
         if (error) {
             return res.status(404).json("Validation Error");
         }
-        const updateTask = await TicketModel.findByIdAndUpdate(
+        const updateTask = await TaskModel.findByIdAndUpdate(
             { _id: req.params.id, user: req.auth.id },
             { ...req.body },
             { new: true }
@@ -100,7 +100,7 @@ export const getTasks = async (req, res, next) => {
 export const getTask = async (req, res, next) => {
     try {
         //get ticket by id from database
-        const ticket = await TicketModel.findById(req.params.id);
+        const ticket = await TaskModel.findById(req.params.id);
         //respond  to request
         res.json(ticket);
     } catch (error) {
