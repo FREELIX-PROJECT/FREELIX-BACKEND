@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUserProfile, registerUser, updateUserProfile, userLogin, userLogout } from "../controllers/user.js";
+import { getUserProfile, getUserProjects, registerUser, updateUserProfile, userLogin, userLogout } from "../controllers/user.js";
 import { checkBlacklist, isAuthenticated } from "../middlewares/auth.js";
 import { userAvatarUpload } from "../middlewares/upload.js";
 
@@ -10,6 +10,10 @@ userRouter.post('/users/register', registerUser)
 userRouter.post('/users/login', userLogin)
 
 userRouter.get('/users/me', isAuthenticated, checkBlacklist, getUserProfile)
+
+userRouter.get('/users/me/projects', isAuthenticated, getUserProjects)
+
+userRouter.get('/users/me/tasks', isAuthenticated, getUserProjects)
 
 userRouter.patch('/users/me', isAuthenticated, userAvatarUpload.single('avatar'), updateUserProfile)
 
