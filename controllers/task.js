@@ -1,6 +1,7 @@
 import { TaskModel } from "../models/task.js";
 import { addTaskValidator, updateTaskValidator } from "../validators/task.js";
 import { mailTransporter } from "../utils/mail.js";
+import { UserModel } from "../models/user.js";
 
 export const addTask = async (req, res, next)=>{
     try {
@@ -13,14 +14,17 @@ export const addTask = async (req, res, next)=>{
             ...value,
             user:req.auth.id
         });
-        //send a reminder or notification
-        const addTaskTime = new Date().toLocaleString();
-        await mailTransporter.sendMail({
-            to: req.auth.id,
-            subject: "Task added successfully",
-            text: `You have added: ${value.title} as a task at ${addTaskTime}`
-        })
+        // const user = await UserModel.findById({email: value.email});
+
+        // //send a reminder or notification
+        // const addTaskTime = new Date().toLocaleString();
+        // await mailTransporter.sendMail({
+        //     to: user,
+        //     subject: "Task added successfully",
+        //     text: `You have added: ${value.title} as a task at ${addTaskTime}`
+        // })
         //response to request
+            
         res.status(201).json(newTask);
 
     } catch (error) {
@@ -59,7 +63,7 @@ export const updateTask = async (req, res, next)=>{
         if (!updateTicket) {
            return  res.status(404).json("Update wasn't successful");
         }
-        return res.status(200).json("Ticket updated");
+        return res.status(200).json("Ticket updated", updateTask);
     } catch (error) {
         next(error);
     }
