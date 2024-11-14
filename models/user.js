@@ -23,6 +23,14 @@ const userSchema = new Schema({
         required: true
     },
 
+    phoneNumber: {
+        type: String
+    },
+
+    bio: {
+        type: String
+    }
+
 }, {
     timestamps: true,
 });
