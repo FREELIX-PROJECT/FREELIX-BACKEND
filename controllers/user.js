@@ -143,11 +143,4 @@ export const userLogout = async (req, res, next) => {
     }
 }
 
-// Remove expired Tokens from the database at intervals
-// const removeExpiredTokens = async () => {
-//     await BlacklistModel.deleteMany({ expiresAt: { $lt: new Date() } });
-
-//     // Run this at regualar intervals 
-//     setInterval(removeExpiredTokens, 0.15 * 60 * 60 * 1000);
-// }
 // Delete Users
