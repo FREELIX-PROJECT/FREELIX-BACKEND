@@ -85,14 +85,14 @@ export const deleteTask = async (req, res, next) => {
 
 export const getTasks = async (req, res, next) => {
     try {
-        const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
+        const { filter = "{}", sort = "{}", limit = 0, skip = 0 } = req.query;
         
         const tasks = await TaskModel
             .find(JSON.parse(filter))
             .sort(JSON.parse(sort))
             .limit(limit)
             .skip(skip)
-            {user: req.auth.id};
+            // {user: req.auth.id};
         // Return response
         return res.status(200).json(tasks);
     } catch (error) {
