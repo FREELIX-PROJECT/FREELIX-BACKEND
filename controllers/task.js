@@ -14,12 +14,10 @@ export const addTask = async (req, res, next)=>{
             ...value,
             user:req.auth.id
         });
-        // const user = await UserModel.findById({email: value.email});
-
-        // //send a reminder or notification
+        //send a reminder or notification
         // const addTaskTime = new Date().toLocaleString();
         // await mailTransporter.sendMail({
-        //     to: user,
+        //     to: req.auth.id,
         //     subject: "Task added successfully",
         //     text: `You have added: ${value.title} as a task at ${addTaskTime}`
         // })
@@ -57,10 +55,10 @@ export const updateTask = async (req, res, next)=>{
         }
         const updateTask = await TaskModel.findByIdAndUpdate(
             { _id: req.params.id, user: req.auth.id },
-            { ...req.body },
+            { ...value },
             { new: true }
         );
-        if (!updateTicket) {
+        if (!updateTask) {
            return  res.status(404).json("Update wasn't successful");
         }
         return res.status(200).json("Ticket updated", updateTask);
