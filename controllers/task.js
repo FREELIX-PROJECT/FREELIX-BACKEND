@@ -86,12 +86,7 @@ export const deleteTask = async (req, res, next) => {
 export const getTasks = async (req, res, next) => {
     try {
         const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
-        // const taskFilter = { ...JSON.parse(filter), user: req.auth.id };
-        // // Fetch Tasks from database
-        // const tasks = await TaskModel.find(taskFilter)
-        //     .sort(JSON.parse(sort))
-        //     .limit(limit)
-        //     .skip(skip);
+        
         const tasks = await TaskModel
             .find(JSON.parse(filter))
             .sort(JSON.parse(sort))
