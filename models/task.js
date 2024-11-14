@@ -8,11 +8,11 @@ const taskSchema = new Schema({
     status: {
         type: String,
         enum: [
-            'In progress',
-            'Done',
-            'Closed'
+            'in progress',
+            'done',
+            'closed'
         ],
-        default: 'In progress'
+        default: 'in progress'
     }
     // assignedTo: { type: Types.ObjectId, ref: 'User' },
     // hoursLogged: { type: Number, default: 0 }
