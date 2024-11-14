@@ -7,6 +7,7 @@ import {
     updateProject,
     deleteProject
 } from "../controllers/project.js";
+
 import { isAuthenticated } from "../middlewares/auth.js";
 
 const projectRouter = Router();

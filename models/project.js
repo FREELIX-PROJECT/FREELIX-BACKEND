@@ -7,8 +7,8 @@ const projectSchema = new Schema({
     projectBegins: { type: Date },
     projectDeadline: { type: Date },
     projectBudget: { type: Number, required: true },
+    projectStructure: {type: String},
     description: { type: String, required: true },
-    // freelancer: { type: String, required: true },
     freelancer: { type: Types.ObjectId, ref: 'User' },
     status: {
         type: String,

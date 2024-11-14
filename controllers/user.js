@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
 import { mailTransporter } from "../utils/mail.js";
+import { generateEmailTemplate } from "../utils/Template.js";
 
 
 // Register Users
@@ -27,11 +28,20 @@ export const registerUser = async (req, res, next) => {
             ...value,
             password: hashPassword
         });
+
+        //pick username from value
+///html content goes here
+        const emailContent = `
+         <p>Dear ${value.fullName},</p>
+              <h4>Your have been registered successfully!</h4>
+              <p>Login to enjoy your workspace on Freelix</p>
+        `
         // send confirmation email
         await mailTransporter.sendMail({
+            from: `FREELIX <freelix.inc@gmail.com>`,
             to: value.email,
             subject: "User Registeration",
-            text: `Welcome! ${value.userName}, your account has been registered successfully.`
+            html: generateEmailTemplate(emailContent)
         });
         // Respond to request
         res.json('User Registered!')
@@ -64,7 +74,7 @@ export const userLogin = async (req, res, next) => {
         }
         // sign a token for user
         const token = jwt.sign(
-            { id: user.id },
+            { id: user.id, email: user.email },
             process.env.JWT_PRIVATE_KEY,
             { expiresIn: '24h' }
         );

@@ -3,7 +3,7 @@ import Joi from "joi";
 export const addTaskValidator = Joi.object({
     title: Joi.string().required(),
     description: Joi.string(),
-    assignedTo: Joi.string().required(),
+    assignedTo: Joi.string(),
     hoursLogged: Joi.number()
 });
 
