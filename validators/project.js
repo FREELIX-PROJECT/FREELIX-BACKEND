@@ -6,6 +6,7 @@ export const addProjectValidator = Joi.object({
         projectBegins: Joi.date().optional(),
         projectDeadline: Joi.date().optional(),
         projectBudget: Joi.number().required(),
+        projectStructure: Joi.string(),
         description: Joi.string().required(),
         freelancer: Joi.string().regex(/^[0-9a-fA-F]{24}$/).optional(), // ObjectId validation pattern
         status: Joi.string().valid('open', 'in-progress', 'completed', 'closed').default('open')
@@ -17,6 +18,7 @@ export const updateProjectValidator = Joi.object({
         projectBegins: Joi.date(),
         projectDeadline: Joi.date(),
         projectBudget: Joi.number(),
+        projectStructure: Joi.string(),
         description: Joi.string(),
         freelancer: Joi.string().regex(/^[0-9a-fA-F]{24}$/).optional(),
         status: Joi.string().valid('open', 'in-progress', 'completed', 'closed')
