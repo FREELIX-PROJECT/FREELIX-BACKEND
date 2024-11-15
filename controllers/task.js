@@ -60,7 +60,8 @@ export const updateTask = async (req, res, next) => {
             return res.status(404).json("Validation Error");
         }
         const updateTask = await TaskModel.findByIdAndUpdate(
-            { _id: req.params.id, user: req.auth.id },
+            req.params.id,
+            req.auth.id,
             { ...value },
             { new: true }
         );
@@ -94,10 +95,7 @@ export const getTasks = async (req, res, next) => {
     try {
         const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
 
-        // Fetch Tasks from database
-
-        const { filter = "{}", sort = "{}", limit = 0, skip = 0 } = req.query;
-        
+        // Fetch Tasks from database    
         const tasks = await TaskModel
             .find(JSON.parse(filter))
             .sort(JSON.parse(sort))
