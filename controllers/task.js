@@ -111,7 +111,7 @@ export const getTasks = async (req, res, next) => {
 export const getTask = async (req, res, next) => {
     try {
         //get ticket by id from database
-        const ticket = await TaskModel.findById(req.params.id);
+        const ticket = await TaskModel.findByIdAndDelete(req.params.id);
         //respond  to request
         res.json(ticket);
     } catch (error) {

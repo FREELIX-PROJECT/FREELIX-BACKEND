@@ -85,7 +85,7 @@ export const updateProject = async (req, res, next) => {
 
 export const deleteProject = async (req, res, next) => {
     try {
-        const deletedProject = await ProjectModel.findOneAndDelete(req.body.id);
+        const deletedProject = await ProjectModel.findByIdAndDelete(req.params.id);
 
         // Check if the Project was found and deleted
         if (!deletedProject) {
