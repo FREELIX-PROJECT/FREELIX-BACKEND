@@ -69,11 +69,6 @@ export const updateTask = async (req, res, next) => {
             return res.status(404).json("Update wasn't successful");
         }
         return res.status(200).json("Task updated");
-
-           return  res.status(404).json("Update wasn't successful");
-        }
-        return res.status(200).json("Ticket updated", updateTask);
-
     } catch (error) {
         next(error);
     }
