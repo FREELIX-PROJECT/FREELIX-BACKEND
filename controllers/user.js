@@ -3,7 +3,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
 import { mailTransporter } from "../utils/mail.js";
-import { generateEmailTemplate } from "../utils/Template.js";
+import { generateEmailTemplate } from "../utils/template.js";
 import { ProjectModel } from "../models/project.js";
 import { TaskModel } from "../models/task.js";
 
