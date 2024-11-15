@@ -3,19 +3,19 @@ import { toJSON } from "@reis/mongoose-to-json";
 
 
 const taskSchema = new Schema({
-    title: { type: String, required: true },
+    // title: { type: String, required: true },
     description: { type: String },
-    assignedTo: { type: Types.ObjectId, ref: 'User' },
     status: {
         type: String,
         enum: [
-            'Pending',
-            'In progress',
-            'Completed'
+            'in progress',
+            'done',
+            'closed'
         ],
-        default: 'Pending'
-    },
-    hoursLogged: { type: Number, default: 0 }
+        default: 'in progress'
+    }
+    // assignedTo: { type: Types.ObjectId, ref: 'User' },
+    // hoursLogged: { type: Number, default: 0 }
 
 },
     { timestamps: true }

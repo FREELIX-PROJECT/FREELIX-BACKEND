@@ -23,7 +23,7 @@ export const addProject = async (req, res, next) => {
 
 export const getProjects = async (req, res, next) => {
     try {
-        const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
+        const { filter = "{}", sort = "{}", limit = 0, skip = 0 } = req.query;
         // const taskFilter = { user: req.auth.id };
         // Fetch task from database
         const task = await ProjectModel

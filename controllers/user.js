@@ -4,6 +4,9 @@ import jwt from "jsonwebtoken";
 import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
 import { mailTransporter } from "../utils/mail.js";
 import { generateEmailTemplate } from "../utils/Template.js";
+import { ProjectModel } from "../models/project.js";
+import { TaskModel } from "../models/task.js";
+
 
 
 // Register Users
@@ -100,6 +103,43 @@ export const getUserProfile = async (req, res, next) => {
 }
 
 // Get user projects
+export const getUserProjects = async (req, res, next) => {
+    try {
+        const {filter = '{}', sort = '{}', limit = 10, skip = 0} = req.query
+
+        const project = await ProjectModel
+        .find({
+            ...JSON.parse(filter),
+            user: req.auth.id
+        })
+        .sort(JSON.parse(sort))
+        .limit(limit)
+        .skip(skip);
+
+        res.json(project);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getUserTasks = async (req, res, next) => {
+    try {
+        const {filter = '{}', sort = '{}', limit = 10, skip = 0} = req.query
+
+        const task = await TaskModel
+        .find({
+            ...JSON.parse(filter),
+            user: req.auth.id
+        })
+        .sort(JSON.parse(sort))
+        .limit(limit)
+        .skip(skip);
+
+        res.json(task);
+    } catch (error) {
+        next(error);
+    }
+}
 
 // Update User Profile
 export const updateUserProfile = async (req, res, next) => {

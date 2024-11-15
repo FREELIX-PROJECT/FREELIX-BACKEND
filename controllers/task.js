@@ -1,5 +1,8 @@
 import { TaskModel } from "../models/task.js";
 import { addTaskValidator, updateTaskValidator } from "../validators/task.js";
+import { mailTransporter } from "../utils/mail.js";
+import { UserModel } from "../models/user.js";
+
 
 
 export const addTask = async (req, res, next) => {
@@ -14,7 +17,16 @@ export const addTask = async (req, res, next) => {
             user: req.auth.id
         });
         //send a reminder or notification
+
+        // const addTaskTime = new Date().toLocaleString();
+        // await mailTransporter.sendMail({
+        //     to: req.auth.id,
+        //     subject: "Task added successfully",
+        //     text: `You have added: ${value.title} as a task at ${addTaskTime}`
+        // })
+
         //response to request
+            
         res.status(201).json(newTask);
 
     } catch (error) {
@@ -49,13 +61,19 @@ export const updateTask = async (req, res, next) => {
         }
         const updateTask = await TaskModel.findByIdAndUpdate(
             { _id: req.params.id, user: req.auth.id },
-            { ...req.body },
+            { ...value },
             { new: true }
         );
         if (!updateTask) {
+
             return res.status(404).json("Update wasn't successful");
         }
         return res.status(200).json("Task updated");
+
+           return  res.status(404).json("Update wasn't successful");
+        }
+        return res.status(200).json("Ticket updated", updateTask);
+
     } catch (error) {
         next(error);
     }
@@ -82,11 +100,15 @@ export const getTasks = async (req, res, next) => {
         const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
 
         // Fetch Tasks from database
+
+        const { filter = "{}", sort = "{}", limit = 0, skip = 0 } = req.query;
+        
         const tasks = await TaskModel
             .find(JSON.parse(filter))
             .sort(JSON.parse(sort))
             .limit(limit)
-            .skip(skip);
+            .skip(skip)
+            // {user: req.auth.id};
         // Return response
         return res.status(200).json(tasks);
     } catch (error) {
