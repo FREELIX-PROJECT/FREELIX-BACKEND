@@ -12,7 +12,7 @@ export const addProject = async (req, res, next) => {
         // write Project to database
         const newProject = await ProjectModel.create({
             ...value,
-            // user: req.auth.id,
+            user: req.auth.id,
         });
         //respond to request
         res.status(201).json(newProject);

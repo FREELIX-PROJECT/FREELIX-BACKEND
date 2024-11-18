@@ -105,6 +105,7 @@ export const getUserProfile = async (req, res, next) => {
 // Get user projects
 export const getUserProjects = async (req, res, next) => {
     try {
+        
         const {filter = '{}', sort = '{}', limit = 10, skip = 0} = req.query
 
         const project = await ProjectModel
@@ -124,6 +125,7 @@ export const getUserProjects = async (req, res, next) => {
 
 export const getUserTasks = async (req, res, next) => {
     try {
+        
         const {filter = '{}', sort = '{}', limit = 10, skip = 0} = req.query
 
         const task = await TaskModel

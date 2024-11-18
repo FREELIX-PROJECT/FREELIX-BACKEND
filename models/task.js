@@ -13,6 +13,11 @@ const taskSchema = new Schema({
             'closed'
         ],
         default: 'in progress'
+    },
+    user: {
+        type: Types.ObjectId,
+        ref: 'User',
+        required: true
     }
     // assignedTo: { type: Types.ObjectId, ref: 'User' },
     // hoursLogged: { type: Number, default: 0 }
