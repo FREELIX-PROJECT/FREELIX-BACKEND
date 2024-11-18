@@ -9,6 +9,10 @@ const projectSchema = new Schema({
     projectBudget: { type: Number, required: true },
     projectStructure: {type: String},
     description: { type: String, required: true },
+    user: {
+        type: Types.ObjectId,
+        ref: 'User'
+    },
     freelancer: { type: Types.ObjectId, ref: 'User' },
     status: {
         type: String,
